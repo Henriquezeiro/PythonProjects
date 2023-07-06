@@ -1,5 +1,3 @@
-from turtle import clear
-
 print("******************\n\tAdvinhação\t\n******************\n")
 
 rodada = 1
