@@ -14,6 +14,9 @@ def escolher_jogo():
         forca.jogar()
     elif escolha == 3:
         calculadora.input_calc()
+    else:
+        print("Opção inválida!")
+        escolher_jogo()
 
 
 if __name__ == "__main__":
