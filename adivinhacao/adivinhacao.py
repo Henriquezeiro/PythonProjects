@@ -1,20 +1,31 @@
 import random
 
-print("\n\x1B[3m************* Jogo da Adivinhação *************\x1B[3m\n")
+print("\n************* Jogo da Adivinhação *************\n")
 
-rodada = 1
-chances = 5
-num_secreto = random.randint(1, 100)
+chances = 0
+num_secreto = random.randrange(1, 101) # Gera um número aleatório
+pontos = 1000
 
+# funcionalidade para seleção de níveis
+print("Qual o nível de dificuldade?\nfácil (1) médio (2) difícil (3)")
+nivel = int(input("Defina o nível: "))
+
+if nivel == 1:
+    chances = 20
+elif nivel == 2:
+    chances = 10
+else:
+    chances = 5
+
+# loop de rodadas
 for rodada in range(1, chances + 1):
 
-    print("\033[3;35m" "rodada {} de 5" "\033[0m".format(rodada))
-    num_digitado_str = input("Digite o número entre 1 e 100: ")
-    print("\nVocê digitou: ", num_digitado_str)
-    tentativa = int(num_digitado_str)
+    print(f"\nrodada {rodada} de {chances}")
+    tentativa = int(input("Digite o número entre 1 e 100: "))
+    print(f"Você digitou: {tentativa}")
 
     if tentativa < 1 or tentativa > 100:
-        print("\033[1;3;31m" "Número inválido! Tente algo entre 1 e 100" "\033[0m\n")
+        print("Número inválido! Tente algo entre 1 e 100\n")
         continue
 
     # Variável para condições
@@ -23,16 +34,19 @@ for rodada in range(1, chances + 1):
     tentativa_menor = tentativa < num_secreto
 
     if tentativa_correta:
-        print("\033[32m" "\x1B[3m" "Você acertou! O número secreto era" "\x1B[0m" "\033[0m", num_secreto)
+        print(f"Você acertou e fez {pontos} pontos!! O número secreto era", num_secreto)
         break
     else:
+        pontos_perdidos = abs(num_secreto - tentativa)
+        pontos = pontos_perdidos
         if tentativa_maior:
-            print("\033[31m" "\x1B[3m" "Você errou! Seu valor foi MAIOR que o número secreto." "\x1B[0m" "\033[0m\n")
+            print("Você errou! Seu valor foi MAIOR que o número secreto.\n---------------------------------------------")
+            if rodada == chances:
+                print(f"O número secreto era {num_secreto} e você fez {pontos} pontos.")
+
         elif tentativa_menor:
-            print("\033[31m" "\x1B[3m" "Você errou! Seu valor foi MENOR que o número secreto." "\x1B[3m" "\033[0m\n")
-    if chances == 1:
-        print("\033[33m" "\x1B[3m" "O número secreto era" "\x1B[3m" "\033[0m", num_secreto)
+            print("Você errou! Seu valor foi MENOR que o número secreto.\n---------------------------------------------")
+            if rodada == chances:
+                print(f"O número secreto era {num_secreto} e você fez {pontos} pontos.")
 
-    chances -= 1
-
-print("\n" "\x1B[3m" "************* Fim de Jogo *************" "\x1B[3m")
+print("************* Fim de Jogo *************")
