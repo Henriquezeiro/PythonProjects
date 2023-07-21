@@ -1,8 +1,14 @@
-def jogar():
-    print("\n************* Jogo da Forca *************\n")
+import random
 
-    palavra_secreta = "banana".upper()
-    letras_acertadas = ["_", "_", "_", "_", "_", "_"]
+
+def jogar():
+    imprimir_mensagem_inicial()
+    carrega_palavra_secreta() # arruma isso depois organizando em funções
+
+    numero_aleatorio = random.randrange(0, len(palavras))  # gera número aleatório para definir como índice da lista
+
+    palavra_secreta = palavras[numero_aleatorio].upper()
+    letras_acertadas = ["_" for letra in palavra_secreta]
 
     enforcou = False
     acertou = False
@@ -28,10 +34,27 @@ def jogar():
         acertou = "_" not in letras_acertadas  # acertou será True se os underscores não estiverem em letras_acertadas
         print(letras_acertadas)  # mostra no terminal quais letras estão corretas substituindo os underscores
 
-        if acertou:
-            print("Você ganhou!")
-        else:
-            print("Você perdeu!")
+    if acertou:
+        print("Você ganhou!")
+    else:
+        print("Você perdeu!")
+
+
+def imprimir_mensagem_inicial():
+    print("\n*****************************************")
+    print("************* Jogo da Forca ***************")
+    print("*******************************************\n")
+
+
+def carrega_palavra_secreta():
+    arquivo = open("palavras.txt", "r", encoding="utf-8")  # abrir arquivo txt
+    palavras = []  # Lista vazia para receber o conteúdo
+
+    for linha in arquivo:  # loop para adicionar cada linha do arquivo na lista
+        linha = linha.strip()
+        palavras.append(linha)
+
+    arquivo.close()  # fechar arquivo
 
 
 if __name__ == "__main__":
